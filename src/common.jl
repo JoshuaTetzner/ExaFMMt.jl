@@ -1,4 +1,4 @@
-lib = ("/home/jt286/Documents/Code/C++/exafmm-t/build-release/julia/libExaFMMCInterface")
+using exafmm_jll
 
 function init_sources(points::Matrix{Float64}, charges::Vector{Float64})
     if size(points)[2] != 3
@@ -9,7 +9,7 @@ function init_sources(points::Matrix{Float64}, charges::Vector{Float64})
     end
 
     return ccall(
-        (:init_sources_F64, lib),
+        (:init_sources_F64, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cdouble}, Ptr{Cdouble}, Cint),
         vec(points),
@@ -27,7 +27,7 @@ function init_sources(points::Matrix{Float64}, charges::Vector{ComplexF64})
     end
 
     return ccall(
-        (:init_sources_C64, lib),
+        (:init_sources_C64, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cdouble}, Ptr{Cdouble}, Cint),
         vec(points),
@@ -42,7 +42,7 @@ function init_targets(points::Matrix{Float64}; T=Float64)
     end
 
     return ccall(
-        (:init_targets_F64, lib),
+        (:init_targets_F64, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cdouble}, Cint),
         vec(points),
@@ -56,7 +56,7 @@ function init_targets(points::Matrix{Float64}; T=ComplexF64)
     end
     println("here")
     return ccall(
-        (init_targets_C64, lib),
+        (init_targets_C64, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cdouble}, Cint),
         vec(points),
@@ -67,7 +67,7 @@ end
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{Float64})
 
     return ccall(
-        (update_charges_real, lib),
+        (update_charges_real, exafmmt),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Cdouble}),
         fmmstruct,
@@ -78,7 +78,7 @@ end
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{ComplexF64})
 
     return ccall(
-        (update_charges_cplx, lib),
+        (update_charges_cplx, exafmmt),
         Cvoid,
         (Ptr{Cvoid}, Ptr{ComplexF64}),
         fmmstruct,
@@ -89,9 +89,9 @@ end
 function clear_values(fmmstruct::Ptr{Cvoid})
 
     return ccall(
-        (:clear_values, lib),
+        (:clear_values, exafmmt),
         Cvoid,
-        (Ptr{Cvoid}),
+        (Ptr{Cvoid},),
         fmmstruct
     )
 end

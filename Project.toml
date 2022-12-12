@@ -2,3 +2,6 @@ name = "exafmm"
 uuid = "add1291b-d076-47cc-8667-64576de04ee0"
 authors = ["JoshuaTetzner <joshua.tetzner@uni-rostock.de>"]
 version = "0.1.0"
+
+[deps]
+exafmm_jll = "7995e981-0b40-5434-bfc8-f4c4214a2351"

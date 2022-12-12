@@ -1,9 +1,9 @@
-lib = ("/home/jt286/Documents/Code/C++/exafmm-t/build-release/julia/libExaFMMCInterface")
+using exafmm_jll
 
 function LaplaceFMM(ncrit, p)
 
     return ccall(
-        (:LaplaceFMM, lib),
+        (:LaplaceFMM, exafmmt),
         Ptr{Cvoid},
         (Cint, Cint),
         ncrit,
@@ -14,21 +14,24 @@ end
 function setup_laplace(sources::Ptr{Cvoid}, targets::Ptr{Cvoid}, fmm::Ptr{Cvoid})
 
     return ccall(
-        (:setup_laplace, lib),
+        (:setup_laplace, exafmmt),
         Ptr{Cvoid},
-        (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid})
+        (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         sources,
         targets,
         fmm
     )
 end
 
-function evaluate_laplace(constructor::Ptr{Cvoid})
+function evaluate_laplace(constructor::Ptr{Cvoid}, n)
 
-    return ccall(
-        (:evaluate_laplace, lib),
+    val = ccall(
+        (:evaluate_laplace, exafmmt),
         Ptr{Cdouble},
-        (Ptr{Cvoid},)
+        (Ptr{Cvoid},),
         constructor
     )
+    eval = unsafe_wrap(Array, val, own=true)
+
+    return reshape(eval, n, 4)
 end
