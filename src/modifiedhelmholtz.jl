@@ -1,6 +1,6 @@
 using exafmm_jll
 
-function ModifiedHelmholtzFMM(ncrit, p)
+function ModifiedHelmholtzFMM(wavek::Float64; ncrit=100, p=8)
 
     return ccall(
         (:ModifiedHelmholtzFMM, exafmmt),
@@ -12,27 +12,45 @@ function ModifiedHelmholtzFMM(ncrit, p)
     )
 end
 
-function setup_modifiedhelmholtz(sources::Ptr{Cvoid}, targets::Ptr{Cvoid}, fmm::Ptr{Cvoid})
+function setup(
+    sources::Matrix{F},
+    targets::Vector{F},
+    fmmoptions::ModifiedHelmholtzFMMOptions{I, F}
+) where {I, F <: Real}
 
-    return ccall(
+    src = init_sources(sources, zeros(F, size(sources)[1]))
+    trg = init_targets(targets)
+    fmm = ModifiedHelmholtzFMM(wavek, ncrit=fmmoptions.ncrit, p=fmmoptions.p)
+    fmmstruct = ccall(
         (:setup_modifiedhelmholtz, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
-        sources,
-        targets,
+        src,
+        trg,
         fmm
     )
+
+    constructor = ExaFMM(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
+    Base.finalizer(constructor, free(constructor))
+    
+    return constructor
 end
 
-function evaluate_modifiedhelmholtz(constructor::Ptr{Cvoid})
+function evaluate(
+    A::ExaFMM,
+    x::Vector{F},
+    fmmoptions::ModifiedHelmholtzFMMOptions{I, F}
+) where {I, F <: Real}
 
+    update_charges(A.fmmstruct, x)
+    clear_values(A.fmmstruct)
     val = ccall(
         (:evaluate_modifiedhelmholtz, exafmmt),
-        Ptr{Cdouble},
+        Ptr{F},
         (Ptr{Cvoid},),
-        constructor
+        A.fmmstruct
     )
-    eval = unsafe_wrap(Array, val, own=true)
+    eval = unsafe_wrap(Array, val, 4*A.ntargets, own=true)
 
-    return reshape(eval, n, 4)
+    return reshape(eval, A.ntargets, 4)
 end

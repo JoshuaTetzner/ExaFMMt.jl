@@ -1,37 +1,55 @@
 using exafmm_jll
 
-function HelmholtzFMM(ncrit, p, wavek)
+function HelmholtzFMM(wavek::C; ncrit=100, p=8) where C <: Complex
     return ccall(
         (:HelmholtzFMM, exafmmt),
         Ptr{Cvoid},
-        (Cint, Cint, ComplexF64),
+        (Cint, Cint, C),
         ncrit,
         p,
         wavek
     )
 end
 
-function setup_helmholtz(sources::Ptr{Cvoid}, targets::Ptr{Cvoid}, fmm::Ptr{Cvoid})
+function setup(
+    sources::Matrix{F},
+    targets::Vector{C},
+    fmmoptions::HelmholtzFMMOptions{I, C}
+) where {I, F <: Real, C <: Complex}
 
-    return ccall(
+    src = init_sources(sources, zeros(C, size(sources)[1]))
+    trg = init_targets(targets, T=C)
+    fmm = HelmholtzFMM(fmmoptions.wavek, ncrit=fmmoptions.ncrit, p=fmmoptions.p)
+    fmmstruct = ccall(
         (:setup_helmholtz, exafmmt),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
-        sources,
-        targets,
+        src,
+        trg,
         fmm
     )
+
+    constructor = ExaFMM(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
+    Base.finalizer(constructor, free(constructor))
+
+    return constructor
 end
 
-function evaluate_helmholtz(constructor::Ptr{Cvoid}, n)
+function evaluate(
+    A::ExaFMM,
+    x::Vector{C},
+    fmmoptions::HelmholtzFMMOptions{I, C}
+) where {I, C <: Complex}
+
+    update_charges(A.fmmstruct, x)
+    clear_values(A.fmmstruct)
     val = ccall(
         (:evaluate_helmholtz, exafmmt),
-        Ptr{ComplexF64},
+        Ptr{C},
         (Ptr{Cvoid},),
-        constructor
+        A.fmmstruct
     )
-    eval = unsafe_wrap(Array, val, own=true)
+    eval = unsafe_wrap(Array, val, 4*A.ntargets, own=true)
 
-    return reshape(eval, n, 4)
+    return reshape(eval, A.ntargets, 4)
 end
-
