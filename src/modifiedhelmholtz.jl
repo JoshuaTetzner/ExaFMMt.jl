@@ -6,15 +6,15 @@ function ModifiedHelmholtzFMM(wavek::Float64; ncrit=100, p=8)
         (:ModifiedHelmholtzFMM, exafmmt),
         Ptr{Cvoid},
         (Cint, Cint, Cdouble),
-        ncrit,
-        p, 
+        p,
+        ncrit, 
         wavek
     )
 end
 
 function setup(
     sources::Matrix{F},
-    targets::Vector{F},
+    targets::Matrix{F},
     fmmoptions::ModifiedHelmholtzFMMOptions{I, F}
 ) where {I, F <: Real}
 
@@ -30,8 +30,8 @@ function setup(
         fmm
     )
 
-    constructor = ExaFMM(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
-    Base.finalizer(constructor, free(constructor))
+    constructor = ExaFMM{F}(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
+    Base.finalizer(freeF!, constructor)
     
     return constructor
 end
@@ -53,4 +53,19 @@ function evaluate(
     eval = unsafe_wrap(Array, val, 4*A.ntargets, own=true)
 
     return reshape(eval, A.ntargets, 4)
+end
+
+function verify(
+    exaf::ExaFMM,
+    fmmoptions::ModifiedHelmholtzFMMOptions{I, F}
+) where {I, F <: Real} 
+
+    val = ccall(
+        (:verify_modifiedhelmholtz, exafmmt),
+        Ptr{F},
+        (Ptr{Cvoid},),
+        A.fmmstruct
+    )
+
+    return unsafe_wrap(Array, val, 2, own=true)
 end

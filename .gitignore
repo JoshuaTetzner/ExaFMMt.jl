@@ -1,4 +1,5 @@
 .vscode
+*.dat
 *.mem
 *.jld2
 *.jl.*.cov

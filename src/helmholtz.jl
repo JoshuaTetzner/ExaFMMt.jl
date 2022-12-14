@@ -4,16 +4,16 @@ function HelmholtzFMM(wavek::C; ncrit=100, p=8) where C <: Complex
     return ccall(
         (:HelmholtzFMM, exafmmt),
         Ptr{Cvoid},
-        (Cint, Cint, C),
-        ncrit,
+        (Cint, Cint, ComplexF32),
         p,
+        ncrit,
         wavek
     )
 end
 
 function setup(
     sources::Matrix{F},
-    targets::Vector{C},
+    targets::Matrix{F},
     fmmoptions::HelmholtzFMMOptions{I, C}
 ) where {I, F <: Real, C <: Complex}
 
@@ -29,8 +29,8 @@ function setup(
         fmm
     )
 
-    constructor = ExaFMM(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
-    Base.finalizer(constructor, free(constructor))
+    constructor = ExaFMM{C}(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)
+    Base.finalizer(freeC!, constructor)
 
     return constructor
 end
@@ -38,7 +38,8 @@ end
 function evaluate(
     A::ExaFMM,
     x::Vector{C},
-    fmmoptions::HelmholtzFMMOptions{I, C}
+    fmmoptions::HelmholtzFMMOptions{I, C};
+    verify=false
 ) where {I, C <: Complex}
 
     update_charges(A.fmmstruct, x)
@@ -50,6 +51,21 @@ function evaluate(
         A.fmmstruct
     )
     eval = unsafe_wrap(Array, val, 4*A.ntargets, own=true)
-
+    
     return reshape(eval, A.ntargets, 4)
+end
+
+function verify(
+    exaf::ExaFMM,
+    fmmoptions::HelmholtzFMMOptions{I, C}
+) where {I, C <: Complex} 
+
+    val = ccall(
+        (:verify_helmholtz, exafmmt),
+        Ptr{C},
+        (Ptr{Cvoid},),
+        A.fmmstruct
+    )
+
+    return unsafe_wrap(Array, val, 2, own=true)
 end

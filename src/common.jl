@@ -29,11 +29,11 @@ struct LaplaceFMMOptions{I} <: FMMOptions
     ncrit::I
 end
 
-function LapalceFMMOptions(;p=8, ncrit=100)
+function LaplaceFMMOptions(;p=8, ncrit=100)
     return LaplaceFMMOptions(p, ncrit)
 end
 
-mutable struct ExaFMM
+mutable struct ExaFMM{K} <: LinearMaps.LinearMap{K}
     fmmoptions::FMMOptions
     nsources
     ntargets
@@ -41,39 +41,56 @@ mutable struct ExaFMM
     fmmstruct::Ptr{Cvoid}
     sources::Ptr{Cvoid}
     targets::Ptr{Cvoid}
+end 
+
+function (::ExaFMM{K})(
+    fmmoptions::FMMOptions,
+    nsources,
+    ntargets,
+    fmm::Ptr{Cvoid},
+    fmmstruct::Ptr{Cvoid},
+    sources::Ptr{Cvoid},
+    targets::Ptr{Cvoid}
+) where K
+
+    exafmm = ExaFMM{K}(fmmoptions, nsources, ntargets, fmm, fmmstruct, sources, targets)
+    finalizer(exafmm, free!)
+    return exafmm
 end
 
-function free(x::ExaFMM)
-    if fmmoptions isa HelmholtzFMMOptions
-        ccall(
-            (:freestorage_cplx, exafmm_jll),
-            Cvoid,
-            (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
-            x.fmm,
-            x.fmmstruct,
-            x.sources,
-            x.targets
-        )
-    else
-        ccall(
-            (:freestorage_real, exafmm_jll),
-            Cvoid,
-            (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
-            x.fmm,
-            x.fmmstruct,
-            x.sources,
-            x.targets
-        )
-    end
+function freeF!(x::ExaFMM{F}) where {F <: Real}
+    
+    ccall(
+        (:freestorage_real, exafmmt),
+        Cvoid,
+        (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
+        x.fmm,
+        x.fmmstruct,
+        x.sources,
+        x.targets
+    )
+end
+
+function freeC!(x::ExaFMM{C}) where {C <: Complex}
+
+    ccall(
+        (:freestorage_cplx, exafmmt),
+        Cvoid,
+        (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
+        x.fmm,
+        x.fmmstruct,
+        x.sources,
+        x.targets
+    )
 end
 
 function Base.size(fmm::ExaFMM, dim=nothing)
     if dim === nothing
-        return (fmm.ntargets, fmat.nsources)
+        return (fmm.ntargets, fmm.nsources)
     elseif dim == 1
-        return fmat.ntargets
+        return fmm.ntargets
     elseif dim == 2
-        return fmat.nsources
+        return fmm.nsources
     else
         error("dim must be either 1 or 2")
     end
@@ -166,9 +183,6 @@ function init_sources(points::Matrix{F}, charges::Vector{C}) where {F <: Real, C
     )
 end
 
-a = rand(3, 3)
-eltype(a)
-
 function init_targets(points::Matrix{F}; T=F) where F <: Real
     
     if size(points)[2] != 3
@@ -181,7 +195,7 @@ function init_targets(points::Matrix{F}; T=F) where F <: Real
             Ptr{Cvoid},
             (Ptr{F}, Cint),
             vec(points),
-            length(size(points[1]))
+            size(points)[1]
         )
     else
         return ccall(
@@ -189,7 +203,7 @@ function init_targets(points::Matrix{F}; T=F) where F <: Real
             Ptr{Cvoid},
             (Ptr{F}, Cint),
             vec(points),
-            length(size(points[1]))
+            size(points)[1]
         )
     end
 end
@@ -197,7 +211,7 @@ end
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{F}) where F <:Real
 
     ccall(
-        (update_charges_real, exafmmt),
+        (:update_charges_real, exafmmt),
         Cvoid,
         (Ptr{Cvoid}, Ptr{F}),
         fmmstruct,
@@ -208,7 +222,7 @@ end
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{C}) where C <: Complex
 
     ccall(
-        (update_charges_cplx, exafmmt),
+        (:update_charges_cplx, exafmmt),
         Cvoid,
         (Ptr{Cvoid}, Ptr{C}),
         fmmstruct,
