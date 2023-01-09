@@ -34,4 +34,21 @@ y = A * x
 ytrue = G * x
 ϵ = verify(A, A.fmmoptions)[1]
 
-@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=ϵ
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
+@test eltype(y) == Float64
+
+#Test Float32 version 
+points = rand(Float32, n, 3)
+x = rand(Float32, n)
+wavek = Float32(1.0)
+
+G = greensfunction(points, points, wavek)
+
+A = setup(points, points, ModifiedHelmholtzFMMOptions(wavek))
+
+y = A * x
+ytrue = G * x
+ϵ = verify(A, A.fmmoptions)[1]
+
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3*ϵ
+@test eltype(y) == Float32

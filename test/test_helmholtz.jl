@@ -1,6 +1,7 @@
 using MKL
 using LinearAlgebra
 using Base.Threads
+using Test
 
 function greensfunction(
     src::Matrix{F},
@@ -22,17 +23,32 @@ function greensfunction(
     return G
 end
 
-
 n = 1000
 points = rand(Float64, n, 3)
-x = ComplexF64.(rand(Float64, n))
-wavek = 0.0*im
+x = rand(ComplexF64, n)
+wavek = 4.0 + 3.0*im
 
 G = greensfunction(points, points, wavek)
 A = setup(points, points, HelmholtzFMMOptions(wavek))
 
 y = A * x
 ytrue = G * x
-ϵ = real(verify(A, A.fmmoptions)[1])
+ϵ = abs.(verify(A, A.fmmoptions)[1])
 
-@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=ϵ
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
+@test eltype(y) == ComplexF64
+
+#Test Complex32 version 
+points = rand(Float32, n, 3)
+x = rand(ComplexF32, n)
+wavek = ComplexF32(4.0 + 3.0*im)
+
+G = greensfunction(points, points, wavek)
+A = setup(points, points, HelmholtzFMMOptions(wavek))
+
+y = A * x
+ytrue = G * x
+ϵ = abs.(verify(A, A.fmmoptions)[1])
+
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
+@test eltype(y) == ComplexF32

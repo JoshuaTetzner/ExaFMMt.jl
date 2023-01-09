@@ -4,10 +4,9 @@ authors = ["JoshuaTetzner <joshua.tetzner@uni-rostock.de>"]
 version = "0.1.0"
 
 [deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+LinearMaps = "7a12625a-238d-50fd-b39a-03d52299707e"
 MKL = "33e6dc65-8f57-5167-99aa-e5a354878fb2"
-OpenBLAS32 = "fae2ebec-24a6-48a2-8621-3bc3eb4dc335"
-OpenBLAS32_jll = "656ef2d0-ae68-5445-9ca0-591084a874a2"
-OpenBLASHighCoreCount_jll = "3a2d25a1-7f54-53f7-aded-df035e2fc6f8"
-OpenBLAS_jll = "4536629a-c528-5b80-bd46-f80d51c5b363"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 exafmm_jll = "7995e981-0b40-5434-bfc8-f4c4214a2351"

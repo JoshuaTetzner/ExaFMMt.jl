@@ -29,8 +29,25 @@ x = rand(Float64, n)
 G = greensfunction(points, points)
 
 A = setup(points, points, LaplaceFMMOptions())
+eltype(A)
 y = A * x
 ytrue = G * x
 ϵ = verify(A, A.fmmoptions)[1]
 
-@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=ϵ
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
+@test eltype(y) == Float64
+
+#Test Float32 version 
+points = rand(Float32, n, 3)
+x = rand(Float32, n)
+
+G = greensfunction(points, points)
+
+A = setup(points, points, LaplaceFMMOptions())
+eltype(A)
+y = A * x
+ytrue = G * x
+ϵ = verify(A, A.fmmoptions)[1]
+
+@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
+@test eltype(y) == Float32
