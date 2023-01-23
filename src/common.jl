@@ -1,4 +1,4 @@
-using exafmm_jll
+using Exafmmt_jll
 using LinearAlgebra
 using LinearMaps
 
@@ -113,7 +113,7 @@ Frees the storage which is allocated by the C++ part for the Laplace-FMM and Mod
 function freeF!(x::ExaFMM{Float64})
 
     ccall(
-        (:freestorage_real, exafmmt),
+        (:freestorage_real, libExafmm64),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         x.fmm,
@@ -134,7 +134,7 @@ Frees the storage which is allocated by the C++ part for the Laplace-FMM and Mod
 function freeF!(x::ExaFMM{Float32})
 
     ccall(
-        (:freestorage_real, exafmmt32),
+        (:freestorage_real, libExafmm32),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         x.fmm,
@@ -155,7 +155,7 @@ Frees the storage which is allocated by the C++ part for Helmholtz-FMM.
 function freeC!(x::ExaFMM{ComplexF64})
 
     ccall(
-        (:freestorage_cplx, exafmmt),
+        (:freestorage_cplx, libExafmm64),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         x.fmm,
@@ -176,7 +176,7 @@ Frees the storage which is allocated by the C++ part for Helmholtz-FMM.
 function freeC!(x::ExaFMM{ComplexF32})
 
     ccall(
-        (:freestorage_cplx, exafmmt32),
+        (:freestorage_cplx, libExafmm32),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         x.fmm,
@@ -274,7 +274,7 @@ end
 function init_src(points::Matrix{Float64}, charges::Vector{Float64})
 
     return ccall(
-        (:init_sources_F, exafmmt),
+        (:init_sources_F, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Float64}, Ptr{Float64}, Cint),
         vec(points),
@@ -286,7 +286,7 @@ end
 function init_src(points::Matrix{Float32}, charges::Vector{Float32})
 
     return ccall(
-        (:init_sources_F, exafmmt32),
+        (:init_sources_F, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Float32}, Ptr{Float32}, Cint),
         vec(points),
@@ -319,7 +319,7 @@ end
 function init_src(points::Matrix{Float64}, charges::Vector{ComplexF64})
 
     return ccall(
-        (:init_sources_C, exafmmt),
+        (:init_sources_C, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Float64}, Ptr{ComplexF64}, Cint),
         vec(points),
@@ -331,7 +331,7 @@ end
 function init_src(points::Matrix{Float32}, charges::Vector{ComplexF32})
 
     return ccall(
-        (:init_sources_C, exafmmt32),
+        (:init_sources_C, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Float32}, Ptr{ComplexF32}, Cint),
         vec(points),
@@ -365,7 +365,7 @@ end
 function init_trgC(points::Matrix{Float64})
 
     return ccall(
-        (:init_targets_C, exafmmt),
+        (:init_targets_C, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Float64}, Cint),
         vec(points),
@@ -376,7 +376,7 @@ end
 function init_trgC(points::Matrix{Float32})
 
     return ccall(
-        (:init_targets_C, exafmmt32),
+        (:init_targets_C, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Float32}, Cint),
         vec(points),
@@ -387,7 +387,7 @@ end
 function init_trgF(points::Matrix{Float64})
 
     return ccall(
-        (:init_targets_F, exafmmt),
+        (:init_targets_F, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Float64}, Cint),
         vec(points),
@@ -398,7 +398,7 @@ end
 function init_trgF(points::Matrix{Float32})
 
     return ccall(
-        (:init_targets_F, exafmmt32),
+        (:init_targets_F, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Float32}, Cint),
         vec(points),
@@ -419,7 +419,7 @@ Requires a Float64 array of charges.
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{Float64})
 
     ccall(
-        (:update_charges_real, exafmmt),
+        (:update_charges_real, libExafmm64),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Float64}),
         fmmstruct,
@@ -440,7 +440,7 @@ Requires a Float32 array of charges.
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{Float32})
 
     ccall(
-        (:update_charges_real, exafmmt32),
+        (:update_charges_real, libExafmm32),
         Cvoid,
         (Ptr{Cvoid}, Ptr{Float32}),
         fmmstruct,
@@ -461,7 +461,7 @@ Requires a ComplexF64 array of charges.
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{ComplexF64})
 
     ccall(
-        (:update_charges_cplx, exafmmt),
+        (:update_charges_cplx, libExafmm64),
         Cvoid,
         (Ptr{Cvoid}, Ptr{ComplexF64}),
         fmmstruct,
@@ -482,7 +482,7 @@ Requires a ComplexF32 array of charges.
 function update_charges(fmmstruct::Ptr{Cvoid}, charges::Vector{ComplexF32})
 
     ccall(
-        (:update_charges_cplx, exafmmt32),
+        (:update_charges_cplx, libExafmm32),
         Cvoid,
         (Ptr{Cvoid}, Ptr{ComplexF32}),
         fmmstruct,
@@ -502,7 +502,7 @@ Clears the soultion values in the FMM structure.
 function clear_values(fmmstruct::Ptr{Cvoid}, T::Type{Float64})
     
     ccall(
-        (:clear_values, exafmmt),
+        (:clear_values, libExafmm64),
         Cvoid,
         (Ptr{Cvoid},),
         fmmstruct
@@ -521,7 +521,7 @@ Clears the soultion values in the FMM structure.
 function clear_values(fmmstruct::Ptr{Cvoid}, T::Type{Float32})
     
     ccall(
-        (:clear_values, exafmmt32),
+        (:clear_values, libExafmm32),
         Cvoid,
         (Ptr{Cvoid},),
         fmmstruct
@@ -540,7 +540,7 @@ Clears the soultion values in the FMM structure.
 function clear_values(fmmstruct::Ptr{Cvoid}, T::Type{ComplexF64})
     
     ccall(
-        (:clear_values, exafmmt),
+        (:clear_values, libExafmm64),
         Cvoid,
         (Ptr{Cvoid},),
         fmmstruct
@@ -559,7 +559,7 @@ Clears the soultion values in the FMM structure.
 function clear_values(fmmstruct::Ptr{Cvoid}, T::Type{ComplexF32})
     
     ccall(
-        (:clear_values, exafmmt32),
+        (:clear_values, libExafmm32),
         Cvoid,
         (Ptr{Cvoid},),
         fmmstruct
