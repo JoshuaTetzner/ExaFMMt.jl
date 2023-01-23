@@ -1,4 +1,7 @@
 # ExaFMMt
+
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://JoshuaTetzner.github.io/ExaFMMt.jl/)
+
 This package is wraps the [exafmm-t](https://github.com/exafmm/exafmm-t) library for Julia.
 
 ## Installation 

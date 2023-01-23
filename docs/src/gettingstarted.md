@@ -4,7 +4,7 @@ The package can be installed with the package manager by
 
 ```julia
 import Pkg
-Pkg.add("https://github.com/JoshuaTetzner/exafmm.git")
+Pkg.add("https://github.com/JoshuaTetzner/ExaFMMt.jl.git")
 ```
 
 # First steps
@@ -12,8 +12,7 @@ Pkg.add("https://github.com/JoshuaTetzner/exafmm.git")
 A simple Laplace FMM of a random distribution of charges is computed by the following code:
 
 ```julia
-using exafmm
-
+using ExaFMMt
 sources = rand(100, 3)
 targets = rand(100, 3)
 charges = rand(100)

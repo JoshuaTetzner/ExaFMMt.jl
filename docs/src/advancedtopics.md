@@ -6,4 +6,4 @@ To use the FMM in the BEM you either have to modify the internal calculations of
 
 Since modifying a FMM code or programming one completely is quiet cumbersome the second approach is often the easier one. 
 
-Such an approach is implemented in the (FastBEAST)[https://github.com/sbadrian/FastBEAST] package. In this package the exafmm wrapper of the exafmm-t library is used to accelerate the BEM computation. More detailed information concerning this topic can be found in the documentation of (FastBEAST)[https://github.com/sbadrian/FastBEAST].
+Such an approach is implemented in the [FastBEAST](https://github.com/sbadrian/FastBEAST) package. In this package the exafmm wrapper of the exafmm-t library is used to accelerate the BEM computation. More detailed information concerning this topic can be found in the documentation of [FastBEAST](https://github.com/sbadrian/FastBEAST).

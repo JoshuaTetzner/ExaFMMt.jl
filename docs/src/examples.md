@@ -1,9 +1,9 @@
 # Examples
 The FMM evaluates per default in 64 bits representation. If the input values are all given in 32 bit representation the code changes to 32 bit calculations. Errors may occur if 32 and 64 bit representations are mixed.
-## Laplace FMM
 
+## Laplace FMM
 ```julia
-using exafmm
+using ExaFMMt
 
 # 64 bit representation
 n = 10000
@@ -23,10 +23,9 @@ A = setup(sources, targets, LaplaceFMMOptions())
 y = A * charges
 ```
 
-
 ## Helmholtz FMM
 ```julia
-using exafmm
+using ExaFMMt
 
 # 64 bit representation
 n = 10000
@@ -50,7 +49,7 @@ y = A * charges
 
 ## Modified-Helmholtz FMM
 ```julia
-using exafmm
+using ExaFMMt
 
 # 64 bit representation
 n = 10000

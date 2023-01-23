@@ -2,8 +2,8 @@
 This package is wraps the [exafmm-t](https://github.com/exafmm/exafmm-t) library for Julia.
 
 ## Installation 
-The package can be downloaded by 
+The package can be installed by 
 
-```
-] add https://github.com/JoshuaTetzner/exafmm.git
+```@julia
+pkg> add https://github.com/JoshuaTetzner/ExaFMMt.git
 ```
