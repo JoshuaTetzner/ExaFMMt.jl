@@ -1,4 +1,4 @@
-using exafmm_jll
+using Exafmmt_jll
 
 
 """
@@ -14,7 +14,7 @@ Initializer for the Helmholtz-FMM in the C++ part.
 function HelmholtzFMM(wavek::ComplexF64; ncrit=100, p=8)
 
     return ccall(
-        (:HelmholtzFMM, exafmmt),
+        (:HelmholtzFMM, libExafmm64),
         Ptr{Cvoid},
         (Cint, Cint, ComplexF64),
         p,
@@ -36,7 +36,7 @@ Initializer for the Helmholtz-FMM in the C++ part.
 function HelmholtzFMM(wavek::ComplexF32; ncrit=100, p=8)
 
     return ccall(
-        (:HelmholtzFMM, exafmmt32),
+        (:HelmholtzFMM, libExafmm32),
         Ptr{Cvoid},
         (Cint, Cint, ComplexF32),
         p,
@@ -84,7 +84,7 @@ function setup_helmholtz(
 ) where I
 
     return ccall(
-        (:setup_helmholtz, exafmmt),
+        (:setup_helmholtz, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -101,7 +101,7 @@ function setup_helmholtz(
 ) where I
 
     return ccall(
-        (:setup_helmholtz, exafmmt32),
+        (:setup_helmholtz, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -142,7 +142,7 @@ end
 function evaluate_helmholtz(A::ExaFMM{ComplexF64})
 
     return ccall(
-        (:evaluate_helmholtz, exafmmt),
+        (:evaluate_helmholtz, libExafmm64),
         Ptr{ComplexF64},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -152,7 +152,7 @@ end
 function evaluate_helmholtz(A::ExaFMM{ComplexF32})
 
     return ccall(
-        (:evaluate_helmholtz, exafmmt32),
+        (:evaluate_helmholtz, libExafmm32),
         Ptr{ComplexF32},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -171,7 +171,7 @@ Function compute accuracy of evaluated FMM `exafmm`.
 function verify(exafmm::ExaFMM{ComplexF64}, fmmoptions::HelmholtzFMMOptions{I, ComplexF64}) where I
 
     val = ccall(
-        (:verify_helmholtz, exafmmt),
+        (:verify_helmholtz, libExafmm64),
         Ptr{ComplexF64},
         (Ptr{Cvoid},),
         exafmm.fmmstruct
@@ -191,7 +191,7 @@ Function compute accuracy of evaluated FMM `exafmm`.
 function verify(exafmm::ExaFMM{ComplexF32}, fmmoptions::HelmholtzFMMOptions{I, ComplexF32}) where I
 
     val = ccall(
-        (:verify_helmholtz, exafmmt32),
+        (:verify_helmholtz, libExafmm32),
         Ptr{ComplexF32},
         (Ptr{Cvoid},),
         exafmm.fmmstruct

@@ -1,4 +1,4 @@
-using exafmm_jll
+using Exafmmt_jll
 
 """
     ModifiedHelmholtzFMM(wavek::Float64; ncrit=100, p=8)
@@ -13,7 +13,7 @@ Initializer for the modified-Helmholtz-FMM in the C++ part.
 function ModifiedHelmholtzFMM(wavek::Float64; ncrit=100, p=8)
 
     return ccall(
-        (:ModifiedHelmholtzFMM, exafmmt),
+        (:ModifiedHelmholtzFMM, libExafmm64),
         Ptr{Cvoid},
         (Cint, Cint, Float64),
         p,
@@ -35,7 +35,7 @@ Initializer for the modified-Helmholtz-FMM in the C++ part.
 function ModifiedHelmholtzFMM(wavek::Float32; ncrit=100, p=8)
 
     return ccall(
-        (:ModifiedHelmholtzFMM, exafmmt32),
+        (:ModifiedHelmholtzFMM, libExafmm32),
         Ptr{Cvoid},
         (Cint, Cint, Float32),
         p,
@@ -83,7 +83,7 @@ function setup_modifiedhelmholtz(
 ) where I
 
     return ccall(
-        (:setup_modifiedhelmholtz, exafmmt),
+        (:setup_modifiedhelmholtz, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -100,7 +100,7 @@ function setup_modifiedhelmholtz(
 ) where I
 
     return ccall(
-        (:setup_modifiedhelmholtz, exafmmt32),
+        (:setup_modifiedhelmholtz, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -132,7 +132,7 @@ function evaluate(
 
     update_charges(A.fmmstruct, x)
     clear_values(A.fmmstruct, F)
-    global exafmm32_64 = (F == Float32 ? exafmmt32 : exafmmt)
+    global exafmm32_64 = (F == Float32 ? libExafmm32 : libExafmm64)
     val = ccall(
         (:evaluate_modifiedhelmholtz, exafmm32_64),
         Ptr{F},
@@ -146,7 +146,7 @@ end
 
 function evaluate_modifiedhelmholtz(A::ExaFMM{Float64})
     return ccall(
-        (:evaluate_modifiedhelmholtz, exafmmt),
+        (:evaluate_modifiedhelmholtz, libExafmm64),
         Ptr{Float64},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -155,7 +155,7 @@ end
 
 function evaluate_modifiedhelmholtz(A::ExaFMM{Float32})
     return ccall(
-        (:evaluate_modifiedhelmholtz, exafmmt32),
+        (:evaluate_modifiedhelmholtz, libExafmm32),
         Ptr{Float32},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -177,7 +177,7 @@ function verify(
 ) where I
 
     val = ccall(
-        (:verify_modifiedhelmholtz, exafmmt),
+        (:verify_modifiedhelmholtz, libExafmm64),
         Ptr{Float64},
         (Ptr{Cvoid},),
         exafmm.fmmstruct
@@ -201,7 +201,7 @@ function verify(
 ) where I
 
     val = ccall(
-        (:verify_modifiedhelmholtz, exafmmt32),
+        (:verify_modifiedhelmholtz, libExafmm32),
         Ptr{Float32},
         (Ptr{Cvoid},),
         exafmm.fmmstruct
