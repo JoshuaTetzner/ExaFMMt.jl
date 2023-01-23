@@ -1,4 +1,4 @@
-using exafmm_jll
+using Exafmmt_jll
 
 """
     LaplaceFMM64(;ncrit=100, p=8)
@@ -12,7 +12,7 @@ Initializer for the Laplace-FMM in the C++ part.
 function LaplaceFMM64(;ncrit=100, p=8)
 
     return ccall(
-        (:LaplaceFMM, exafmmt),
+        (:LaplaceFMM, libExafmm64),
         Ptr{Cvoid},
         (Cint, Cint),
         p,
@@ -32,7 +32,7 @@ Initializer for the Laplace-FMM in the C++ part.
 function LaplaceFMM32(;ncrit=100, p=8)
 
     return ccall(
-        (:LaplaceFMM, exafmmt32),
+        (:LaplaceFMM, libExafmm32),
         Ptr{Cvoid},
         (Cint, Cint),
         p,
@@ -80,7 +80,7 @@ function setup_laplace(
 )
 
     fmmstruct = ccall(
-        (:setup_laplace, exafmmt),
+        (:setup_laplace, libExafmm64),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -97,7 +97,7 @@ function setup_laplace(
 )
 
     fmmstruct = ccall(
-        (:setup_laplace, exafmmt32),
+        (:setup_laplace, libExafmm32),
         Ptr{Cvoid},
         (Ptr{Cvoid}, Ptr{Cvoid}, Ptr{Cvoid}),
         src,
@@ -139,7 +139,7 @@ function evaluate_laplace(
     A::ExaFMM{Float64}
 )
     return ccall(
-        (:evaluate_laplace, exafmmt),
+        (:evaluate_laplace, libExafmm64),
         Ptr{Float64},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -150,7 +150,7 @@ function evaluate_laplace(
     A::ExaFMM{Float32}
 )
     return ccall(
-        (:evaluate_laplace, exafmmt32),
+        (:evaluate_laplace, libExafmm32),
         Ptr{Float32},
         (Ptr{Cvoid},),
         A.fmmstruct
@@ -169,7 +169,7 @@ Function compute accuracy of evaluated FMM `exafmm`.
 function verify(exafmm::ExaFMM{Float64}, fmmoptions::LaplaceFMMOptions{I}) where I
 
     val = ccall(
-        (:verify_laplace, exafmmt),
+        (:verify_laplace, libExafmm64),
         Ptr{Float64},
         (Ptr{Cvoid},),
         exafmm.fmmstruct
@@ -190,7 +190,7 @@ Function compute accuracy of evaluated FMM `exafmm`.
 function verify(exafmm::ExaFMM{Float32}, fmmoptions::LaplaceFMMOptions{I}) where I
 
     val = ccall(
-        (:verify_laplace, exafmmt32),
+        (:verify_laplace, libExafmm32),
         Ptr{Float32},
         (Ptr{Cvoid},),
         exafmm.fmmstruct
