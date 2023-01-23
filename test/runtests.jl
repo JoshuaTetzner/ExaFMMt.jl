@@ -1,5 +1,5 @@
 using Test
-using exafmm
+using ExaFMMt
 
 @testset "fmm" begin
     include("test_laplace.jl")
