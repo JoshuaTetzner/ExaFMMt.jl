@@ -1,4 +1,4 @@
-module Exafmm-t
+module ExaFMMt
 
 include("common.jl")
 include("helmholtz.jl")
