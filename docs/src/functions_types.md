@@ -27,7 +27,7 @@ ExaFMMt.freeC!(x::ExaFMMt.ExaFMM{ComplexF64})
 ExaFMMt.freeC!(x::ExaFMMt.ExaFMM{ComplexF32})
 ```
 
-### Laplace FMM
+## Laplace FMM
 ```@docs
 ExaFMMt.LaplaceFMM64(;ncrit=100, p=8)
 ExaFMMt.LaplaceFMM32(;ncrit=100, p=8)
@@ -37,7 +37,7 @@ ExaFMMt.verify(exafmm::ExaFMMt.ExaFMM{Float64}, fmmoptions::ExaFMMt.LaplaceFMMOp
 ExaFMMt.verify(exafmm::ExaFMMt.ExaFMM{Float32}, fmmoptions::ExaFMMt.LaplaceFMMOptions{I}) where I
 ```
 
-### Helmholtz FMM
+## Helmholtz FMM
 ```@docs
 ExaFMMt.HelmholtzFMM(wavek::ComplexF64; p=8, ncrit=100)
 ExaFMMt.HelmholtzFMM(wavek::ComplexF32; p=8, ncrit=100)
@@ -47,7 +47,7 @@ ExaFMMt.verify(exafmm::ExaFMMt.ExaFMM{ComplexF64}, fmmoptions::ExaFMMt.Helmholtz
 ExaFMMt.verify(exafmm::ExaFMMt.ExaFMM{ComplexF32}, fmmoptions::ExaFMMt.HelmholtzFMMOptions{I, ComplexF32}) where I
 ```
 
-### Modified-Helmholtz FMM
+## Modified-Helmholtz FMM
 ```@docs
 ExaFMMt.ModifiedHelmholtzFMM(wavek::Float64; ncrit=100, p=8)
 ExaFMMt.ModifiedHelmholtzFMM(wavek::Float32; ncrit=100, p=8)

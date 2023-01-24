@@ -59,7 +59,7 @@ charges = rand(Float64, n)
 wavek = Float64(1.0)
 
 A = setup(sources, targets, ModifiedHelmholtzFMMOptions(wavek))
-y = A*charges
+y = A * charges
 
 # 32 bit representation
 sources = rand(Float32, n, 3)

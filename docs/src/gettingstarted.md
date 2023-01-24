@@ -13,12 +13,12 @@ A simple Laplace FMM of a random distribution of charges is computed by the foll
 
 ```julia
 using ExaFMMt
-sources = rand(100, 3)
-targets = rand(100, 3)
-charges = rand(100)
+sources = rand(Float64, 100, 3)
+targets = rand(Float64, 100, 3)
+charges = rand(Float64, 100)
 
 A = setup(sources, targets, LaplaceFMMOptions())
-y = A*charges
+y = A * charges
 ```
 
 The variable `A` resembles the FMM-matrix and can be multiplied by a vector of `Float64` charges with 100 elements. 
