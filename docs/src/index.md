@@ -1,6 +1,4 @@
-# ExaFMMt
-[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://JoshuaTetzner.github.io/ExaFMMt.jl/)
-
+# ExaFMM
 This package wraps the [exafmm-t](https://github.com/exafmm/exafmm-t) library for Julia.
 Since Julia can not natively call C++ functions an C interface was added to the [exafmm-t](https://github.com/exafmm/exafmm-t) which can be found in the fork of the library at [JoshuaTetzner/exafmm-t](https://github.com/JoshuaTetzner/exafmm-t/tree/feature/c_interface). The Binary of this library is build and published via [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil) and registered as [Exafmmt_jll](https://github.com/JuliaBinaryWrappers/Exafmmt_jll.jl) in [JuliaBinaryWrappers](https://github.com/JuliaBinaryWrappers/). 
 
@@ -22,3 +20,6 @@ The package can be installed by
 import Pkg
 Pkg.add("https://github.com/JoshuaTetzner/ExaFMMt.jl.git")
 ```
+
+
+
