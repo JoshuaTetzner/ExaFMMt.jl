@@ -12,8 +12,14 @@ MKL = "33e6dc65-8f57-5167-99aa-e5a354878fb2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+julia = "1.8"
 Documenter = "0.27"
 MKL = "0.6"
 Exafmmt_jll = "0.1"
 LinearMaps = "3.8"
 
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
