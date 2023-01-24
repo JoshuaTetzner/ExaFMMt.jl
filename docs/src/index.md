@@ -5,13 +5,13 @@ Since Julia can not natively call C++ functions an C interface was added to the 
 Since [exafmm-t](https://github.com/exafmm/exafmm-t) uses Unix only functions a Windows build is not available. Recommendations on how to get Windows builds working are always welcome. Please open therefore an issue on this repository.  
 
 ## Fast Multipole Method (FMM)
-The FMM is an algorithm to improves the complexity of the matrix-vector product 
+The FMM improves the complexity of the matrix-vector product 
 
 $$Ax = y$$
 
 from $\mathcal{O}(N²)$ to $\mathcal{O}(N)$, where $A$ is the interaction matrix of points that evaluates the Green's function for a Laplace, Helmholtz or modified Helmholtz kernel. 
 
-A common application is combining the FMM with the Boundary Element Method (BEM). Further information concerning this topic can be found in [Advanced Topics](@ref FMM_BEM)
+A common application is of the FMM is the Boundary Element Method (BEM). Further information concerning this topic can be found in [Advanced Topics](@ref FMM_BEM)
 
 ## Installation 
 The package can be installed by 
