@@ -14,5 +14,4 @@ export LaplaceFMMOptions
 export HelmholtzFMMOptions
 export ModifiedHelmholtzFMMOptions
 
-
 end 
