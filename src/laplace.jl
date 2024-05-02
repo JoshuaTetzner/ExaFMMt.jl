@@ -63,7 +63,7 @@ function setup(
     src = init_sources(sources, zeros(F, size(sources)[1]))
     trg = init_targets(targets, F)
     #fmm = LaplaceFMM(F)
-    fmm = (F == Float32 ? LaplaceFMM32() : LaplaceFMM64())
+    fmm = (F == Float32 ? LaplaceFMM32(; ncrit=fmmoptions.ncrit, p=fmmoptions.p) : LaplaceFMM64(; ncrit=fmmoptions.ncrit, p=fmmoptions.p))
     fmmstruct = setup_laplace(src, trg, fmm, F)
 
     constructor = ExaFMM{F}(fmmoptions, size(sources)[1], size(targets)[1], fmm, fmmstruct, src, trg)

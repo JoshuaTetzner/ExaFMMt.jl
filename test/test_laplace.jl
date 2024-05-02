@@ -28,14 +28,22 @@ x = rand(Float64, n)
 
 G = greensfunction(points, points)
 
-A = setup(points, points, LaplaceFMMOptions())
-eltype(A)
-y = A * x
-ytrue = G * x
-ϵ = verify(A, A.fmmoptions)[1]
+Ap2 = setup(points, points, LaplaceFMMOptions(;p=2))
+Ap8 = setup(points, points, LaplaceFMMOptions(;p=8))
 
-@test norm(y[:, 1] - ytrue) / norm(ytrue) ≈ 0 atol=3ϵ
-@test eltype(y) == Float64
+yp2 = Ap2 * x
+yp8 = Ap8 * x
+ytrue = G * x
+
+ϵ = verify(Ap2, Ap2.fmmoptions)[1]
+
+@show relerrp2 = norm(yp2[:, 1] - ytrue) / norm(ytrue)
+@show relerrp8 = norm(yp8[:, 1] - ytrue) / norm(ytrue)
+
+@test relerrp2 < 1e-2
+@test relerrp8 < 1e-8
+
+@test eltype(yp2) == Float64
 
 #Test Float32 version 
 points = rand(Float32, n, 3)
