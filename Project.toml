@@ -1,7 +1,7 @@
 name = "ExaFMMt"
 uuid = "add1291b-d076-47cc-8667-64576de04ee0"
-authors = ["JoshuaTetzner <joshua.tetzner@uni-rostock.de>"]
 version = "0.1.1"
+authors = ["JoshuaTetzner <joshua.tetzner@uni-rostock.de>"]
 
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
@@ -12,11 +12,11 @@ MKL = "33e6dc65-8f57-5167-99aa-e5a354878fb2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-julia = "1.8"
-Documenter = "0.27"
-MKL = "0.6"
+Documenter = "0.27, 1"
 Exafmmt_jll = "0.1"
 LinearMaps = "3.8"
+MKL = "0.6"
+julia = "1.8"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
