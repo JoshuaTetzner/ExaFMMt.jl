@@ -1,22 +1,23 @@
 using Documenter, ExaFMMt
 
-DocMeta.setdocmeta!(
-    ExaFMMt,
-    :DocTestSetup,
-    :(using ExaFMMt);
-    recursive=true,
-)
+DocMeta.setdocmeta!(ExaFMMt, :DocTestSetup, :(using ExaFMMt); recursive=true)
 
-makedocs(
+makedocs(;
     sitename="ExaFMMt.jl",
     modules=[ExaFMMt],
     pages=[
-        "Home" => "index.md",
-        "Getting Started" => "gettingstarted.md",
-        "Types and Functions" => "functions_types.md",
-        "Examples" => "examples.md",
-        "Avanced Topics" => "advancedtopics.md"
-    ]
+        "Introduction" => "index.md",
+        "Manual" => Any[
+            "General Usage" => "./manual/manual.md",
+            "Application Examples" => "./manual/examples.md",
+        ],
+        "Further Details" => Any[
+            "Fast Multipole Method" => "./details/fmm.md",
+            "FMM with the BEM" => "./details/bem.md",
+        ],
+        "Contributing" => "contributing.md",
+        "API Reference" => "apiref.md",
+    ],
 )
 
 deploydocs(;

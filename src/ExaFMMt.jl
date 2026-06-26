@@ -9,9 +9,10 @@ export ExaFMM
 export setup
 export evaluate
 export verify
+export close!
 
 export LaplaceFMMOptions
 export HelmholtzFMMOptions
 export ModifiedHelmholtzFMMOptions
 
-end 
+end
