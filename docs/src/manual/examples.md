@@ -5,7 +5,7 @@ This section contains end-to-end examples for each supported kernel.
 The FMM uses 64-bit arithmetic when the inputs are `Float64` or `ComplexF64`. If all coordinates, charges, and kernel values are provided as `Float32` or `ComplexF32`, it uses the 32-bit library. Mixing 32-bit and 64-bit inputs is rejected.
 
 ## Laplace FMM
-```julia
+```@example laplace
 using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
@@ -26,10 +26,11 @@ charges = rand(Float32, nsources)
 
 A = setup(sources, targets, LaplaceFMMOptions())
 y = A * charges
+y[1:5]
 ```
 
 ## Helmholtz FMM
-```julia
+```@example helmholtz
 using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
@@ -52,10 +53,11 @@ wavek = ComplexF32.(1.0 + 1.0*im)
 
 A = setup(sources, targets, HelmholtzFMMOptions(wavek))
 y = A * charges
+y[1:5]
 ```
 
 ## Modified-Helmholtz FMM
-```julia
+```@example modifiedhelmholtz
 using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
@@ -78,4 +80,5 @@ wavek = Float32(1.0)
 
 A = setup(sources, targets, ModifiedHelmholtzFMMOptions(wavek))
 y = A * charges
+y[1:5]
 ```
