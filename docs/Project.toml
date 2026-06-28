@@ -1,3 +1,4 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 ExaFMMt = "add1291b-d076-47cc-8667-64576de04ee0"
+MKL = "33e6dc65-8f57-5167-99aa-e5a354878fb2"

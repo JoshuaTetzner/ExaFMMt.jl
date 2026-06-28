@@ -10,7 +10,7 @@ charge vector.
 A simple Laplace FMM of a random distribution of charges is computed by the
 following code:
 
-```julia
+```@example usage
 using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
@@ -20,6 +20,7 @@ charges = rand(Float64, 120)
 
 A = setup(sources, targets, LaplaceFMMOptions())
 y = A * charges
+y[1:5]
 ```
 
 The variable `A` represents the FMM matrix and can be multiplied by a vector of
@@ -30,7 +31,7 @@ potential at each target.
 
 The kernel is selected through the options object passed to [`setup`](@ref):
 
-```julia
+```@example usage
 # Laplace
 A = setup(sources, targets, LaplaceFMMOptions())
 
@@ -39,6 +40,8 @@ A = setup(sources, targets, HelmholtzFMMOptions(ComplexF64(1.0 + 1.0im)))
 
 # Modified Helmholtz with a real wavenumber
 A = setup(sources, targets, ModifiedHelmholtzFMMOptions(Float64(1.0)))
+
+typeof(A)
 ```
 
 Each options constructor accepts the expansion order `p` and the leaf-size

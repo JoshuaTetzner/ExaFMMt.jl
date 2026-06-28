@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "ExaFMMt.jl"
+abstract: "A Julia wrapper for the exafmm-t fast multipole method (FMM) library, supporting Laplace, Helmholtz, and modified Helmholtz kernels in single and double precision."
+type: software
+authors:
+  - family-names: "Tetzner"
+    given-names: "Joshua"
+    affiliation: "University of Rostock"
+license: MIT
+version: "0.1.1"
+url: "https://github.com/JoshuaTetzner/ExaFMMt.jl"
+repository-code: "https://github.com/JoshuaTetzner/ExaFMMt.jl"
+keywords:
+  - "fast multipole method"
+  - "boundary element method"
+  - "Julia"
+  - "exafmm-t"
+# After the next release the Zenodo integration will mint a DOI. Add it here:
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: "Archived snapshot of this release"
