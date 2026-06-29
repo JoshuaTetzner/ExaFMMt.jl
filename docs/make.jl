@@ -20,6 +20,15 @@ makedocs(;
     ],
 )
 
+# The @example blocks run real FMMs, and exafmm-t writes precomputation *.dat
+# files into the working directory (which Documenter sets inside the build tree).
+# Remove them so they are not deployed to gh-pages.
+for (root, _, files) in walkdir(joinpath(@__DIR__, "build"))
+    for f in files
+        endswith(f, ".dat") && rm(joinpath(root, f))
+    end
+end
+
 deploydocs(;
     repo="github.com/JoshuaTetzner/ExaFMMt.jl.git",
     target="build",
