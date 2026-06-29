@@ -5,6 +5,8 @@
 *.jl.*.cov
 *.jl.cov
 *.jl.mem
+lcov.info
 docs/build/
 docs/site/
 Manifest.toml
+SETUP.md
