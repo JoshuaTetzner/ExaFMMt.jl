@@ -20,11 +20,11 @@ charges = rand(Float32, nsources)
 A = setup(sources, targets, LaplaceFMMOptions())
 y = A * charges
 y[1:5]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5-element Vector{Float32}:
- 891.35236
- 661.58734
- 701.47473
- 838.90063
- 732.8517</code></pre><h2 id="Helmholtz-FMM"><a class="docs-heading-anchor" href="#Helmholtz-FMM">Helmholtz FMM</a><a id="Helmholtz-FMM-1"></a><a class="docs-heading-anchor-permalink" href="#Helmholtz-FMM" title="Permalink"></a></h2><pre><code class="language-julia hljs">using MKL # or another BLAS/LAPACK backend configured for your Julia session
+ 807.03845
+ 719.47406
+ 741.2793
+ 737.52673
+ 753.0558</code></pre><h2 id="Helmholtz-FMM"><a class="docs-heading-anchor" href="#Helmholtz-FMM">Helmholtz FMM</a><a id="Helmholtz-FMM-1"></a><a class="docs-heading-anchor-permalink" href="#Helmholtz-FMM" title="Permalink"></a></h2><pre><code class="language-julia hljs">using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
 # 64 bit representation
@@ -47,11 +47,11 @@ wavek = ComplexF32.(1.0 + 1.0*im)
 A = setup(sources, targets, HelmholtzFMMOptions(wavek))
 y = A * charges
 y[1:5]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5-element Vector{ComplexF32}:
- 145.82918f0 + 535.0122f0im
- 231.13258f0 + 641.87054f0im
- 240.82904f0 + 669.67395f0im
- 260.51837f0 + 697.26776f0im
- 324.47763f0 + 801.5321f0im</code></pre><h2 id="Modified-Helmholtz-FMM"><a class="docs-heading-anchor" href="#Modified-Helmholtz-FMM">Modified-Helmholtz FMM</a><a id="Modified-Helmholtz-FMM-1"></a><a class="docs-heading-anchor-permalink" href="#Modified-Helmholtz-FMM" title="Permalink"></a></h2><pre><code class="language-julia hljs">using MKL # or another BLAS/LAPACK backend configured for your Julia session
+   306.1219f0 + 760.5235f0im
+   77.90497f0 + 400.67865f0im
+ 108.835236f0 + 453.8034f0im
+  123.12033f0 + 490.055f0im
+ 127.242966f0 + 481.49268f0im</code></pre><h2 id="Modified-Helmholtz-FMM"><a class="docs-heading-anchor" href="#Modified-Helmholtz-FMM">Modified-Helmholtz FMM</a><a id="Modified-Helmholtz-FMM-1"></a><a class="docs-heading-anchor-permalink" href="#Modified-Helmholtz-FMM" title="Permalink"></a></h2><pre><code class="language-julia hljs">using MKL # or another BLAS/LAPACK backend configured for your Julia session
 using ExaFMMt
 
 # 64 bit representation
@@ -74,8 +74,8 @@ wavek = Float32(1.0)
 A = setup(sources, targets, ModifiedHelmholtzFMMOptions(wavek))
 y = A * charges
 y[1:5]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">5-element Vector{Float32}:
- 420.05795
- 344.68665
- 438.56555
- 367.97943
- 461.6391</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../manual/">« General Usage</a><a class="docs-footer-nextpage" href="../../details/fmm/">Fast Multipole Method »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 29 June 2026 07:44">Monday 29 June 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+ 479.9331
+ 302.96567
+ 543.9622
+ 479.49536
+ 401.36334</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../manual/">« General Usage</a><a class="docs-footer-nextpage" href="../../details/fmm/">Fast Multipole Method »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 29 June 2026 08:07">Monday 29 June 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
