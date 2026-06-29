@@ -1,7 +1,7 @@
 name = "ExaFMMt"
 uuid = "add1291b-d076-47cc-8667-64576de04ee0"
 authors = ["JoshuaTetzner <joshua.tetzner@uni-rostock.de>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 Exafmmt_jll = "eacd9ca4-7f43-55e5-94d9-9be91740ea79"
