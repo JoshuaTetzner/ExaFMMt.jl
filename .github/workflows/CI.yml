@@ -31,6 +31,10 @@ jobs:
       - uses: julia-actions/cache@v3
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
+        with:
+          # Forcing the latest compatible versions (the default on CompatHelper/Dependabot
+          # PRs) cannot resolve on Julia 1.10: the newest allowed JET needs Julia >= 1.12.
+          force_latest_compatible_version: ${{ matrix.version == '1.10' && 'false' || 'auto' }}
       - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v7
         with:
