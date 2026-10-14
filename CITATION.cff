@@ -8,7 +8,7 @@ authors:
     given-names: "Joshua"
     affiliation: "University of Rostock"
 license: MIT
-version: "0.1.1"
+version: "0.1.2"
 url: "https://github.com/JoshuaTetzner/ExaFMMt.jl"
 repository-code: "https://github.com/JoshuaTetzner/ExaFMMt.jl"
 keywords:

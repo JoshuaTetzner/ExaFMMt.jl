@@ -1,7 +1,7 @@
 # ExaFMMt
 [![Docs-stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://JoshuaTetzner.github.io/ExaFMMt.jl/stable/)
 [![Docs-dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://JoshuaTetzner.github.io/ExaFMMt.jl/dev/)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/JoshuaTetzner/ExaFMMt.jl/blob/master/LICENSE)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/JoshuaTetzner/ExaFMMt.jl/blob/main/LICENSE)
 [![CI](https://github.com/JoshuaTetzner/ExaFMMt.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/JoshuaTetzner/ExaFMMt.jl/actions/workflows/CI.yml)
 [![codecov](https://codecov.io/gh/JoshuaTetzner/ExaFMMt.jl/graph/badge.svg?token=RDRQTBWQS3)](https://codecov.io/gh/JoshuaTetzner/ExaFMMt.jl)
 
