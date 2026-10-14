@@ -32,6 +32,6 @@ end
 deploydocs(;
     repo="github.com/JoshuaTetzner/ExaFMMt.jl.git",
     target="build",
-    devbranch="dev",
+    devbranch="main",
     versions=["stable" => "v^", "dev" => "dev"],
 )
